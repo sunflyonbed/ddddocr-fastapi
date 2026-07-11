@@ -1,0 +1,20 @@
+name: DdddOcr FastAPI
+version: "1.0.0"
+slug: ddddocr_fastapi
+description: FastAPI service for DdddOcr OCR, slide captcha matching, and detection.
+url: https://github.com/sunflyonbed/ddddocr-fastapi
+arch:
+  - amd64
+  - aarch64
+startup: application
+boot: auto
+ports:
+  8000/tcp: 8000
+ports_description:
+  8000/tcp: DdddOcr FastAPI HTTP API
+webui: http://[HOST]:[PORT:8000]/docs
+watchdog: http://[HOST]:[PORT:8000]/health
+init: true
+stage: stable
+options: {}
+schema: {}

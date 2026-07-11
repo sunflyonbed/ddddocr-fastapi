@@ -1,13 +1,15 @@
-import uvicorn
-from fastapi import FastAPI, File, UploadFile, HTTPException, Form
-from typing import Optional, Union
 import base64
-from .models import OCRRequest, SlideMatchRequest, DetectionRequest, APIResponse
-from .services import ocr_service
+from typing import Optional, Union
 
-app = FastAPI()
+import uvicorn
+from fastapi import FastAPI, File, Form, HTTPException, UploadFile
 
 from starlette.datastructures import UploadFile as StarletteUploadFile
+
+from .models import APIResponse
+from .services import ocr_service
+
+app = FastAPI(title="DdddOcr FastAPI")
 
 
 async def decode_image(image: Union[UploadFile, StarletteUploadFile, str, None]) -> bytes:
@@ -27,6 +29,11 @@ async def decode_image(image: Union[UploadFile, StarletteUploadFile, str, None])
             raise HTTPException(status_code=400, detail="Invalid base64 string")
     else:
         raise HTTPException(status_code=400, detail="Invalid image input")
+
+
+@app.get("/health")
+async def health_check():
+    return {"status": "ok"}
 
 
 @app.post("/ocr", response_model=APIResponse)
@@ -57,7 +64,7 @@ async def slide_match_endpoint(
         simple_target: bool = Form(False)
 ):
     try:
-        if (background is None and target is None) or (background_file.size == 0 and target_file.size == 0):
+        if (target_file is None and target is None) or (background_file is None and background is None):
             return APIResponse(code=400, message="Both target and background must be provided")
 
         target_bytes = await decode_image(target_file or target)
