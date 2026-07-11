@@ -1,12 +1,12 @@
-# 使用官方 Python 运行时作为父镜像
-FROM python:3.9-slim
+# 使用 Docker Hub 镜像站，避免部分网络环境无法拉取 registry-1.docker.io
+FROM docker.m.daocloud.io/library/python:3.9-slim
 
 ARG BUILD_VERSION=dev
 ARG BUILD_ARCH=amd64
 
 LABEL \
     io.hass.version="${BUILD_VERSION}" \
-    io.hass.type="addon" \
+    io.hass.type="app" \
     io.hass.arch="${BUILD_ARCH}" \
     org.opencontainers.image.title="DdddOcr FastAPI" \
     org.opencontainers.image.description="Home Assistant add-on for DdddOcr FastAPI"

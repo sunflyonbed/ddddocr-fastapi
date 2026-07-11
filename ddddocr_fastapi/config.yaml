@@ -1,5 +1,5 @@
 name: DdddOcr FastAPI
-version: "1.0.0"
+version: "1.0.1"
 slug: ddddocr_fastapi
 description: FastAPI service for DdddOcr OCR, slide captcha matching, and detection.
 url: https://github.com/sunflyonbed/ddddocr-fastapi
